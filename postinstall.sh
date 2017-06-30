@@ -57,7 +57,7 @@ echo "votre serveur ntp :" $ntp;
 echo "votre domaine smtp :" $domainesmtp;
 echo "votre relay smtp :" $relaysmtp;
 
-echo "La poste configuration de votre serveur PVE va commencer..."
+echo "La poste configuration de votre serveur PVE va commencer ..."
 
 ##ajout du dépot pve-no-subscription, DELL et non-free
 echo -e '\033[1;33m Ajout du depot pve-no-subscription, DELL et non-free \033[0m'
@@ -102,7 +102,7 @@ echo 'PATH=${GZIP_BINDIR-'/bin'}:$PATH' >> /bin/pigzwrapper
 echo 'GZIP="-1"' >> /bin/pigzwrapper
 cpu=`echo "$(grep -c "processor" /proc/cpuinfo) / $(grep "physical id" /proc/cpuinfo |sort -u |wc -l)" | bc`
 echo 'exec /usr/bin/pigz -p cpu  "$@"'  >> /bin/pigzwrapper
-sed -i "s/cpu/"$cpu"/g" /bin/pigzwrapper
+sed -i 's/cpu/'$cpu'/g' /bin/pigzwrapper
 chmod +x /bin/pigzwrapper
 mv /bin/gzip /bin/gzip.original
 cp /bin/pigzwrapper /bin/gzip
@@ -117,16 +117,11 @@ mv snmpd.conf /etc/snmp/
 
 
 ##Ajout du relais smtp et reload de postfix
-grep $domainesmtp /etc/postfix/main.cf
-if [ $? = "1" ]
-then
 echo -e '\033[1;33m Ajout du relay smtp dans postfix \033[0m'
-sed -i '/^relayhost\=/ s/relayhost=*/relayhost='$relaysmtp'/' /etc/postfix/main.cf
+sed -i '/^relayhost\ =\ / s/relayhost\ =*/relayhost='$relaysmtp'/' /etc/postfix/main.cf
 echo -e '\033[1;33m Modification du domaine smtp  dans postfix \033[0m'
 sed -i '/^myhostname\=/ s/myhostname=.*/myhostname='$domainesmtp'/' /etc/postfix/main.cf
-else
-echo "postfix déjà paramétré"
-fi
+
 
 ##Paramétrage du apticron
 sed -i 's/root/'$adminmail'/g' /etc/apticron/apticron.conf

@@ -6,15 +6,22 @@
 ##Version : 1.0
 ##Licence : WTFPL (https://fr.wikipedia.org/wiki/WTFPL)
 
+echo "############################################"
+echo "#######Script pour configurer Proxmox#######"
+echo "############################################"
+echo "############################################"
+echo "############################################"
+echo "####Veuillez répondre questions suivante####"
+echo "############################################"
 
 ##set variable
 ##mail de l'admin
-echo "Adresse mail de l'administrateur ?"
+echo -e '\033[1;33m Adresse mail de l'administrateur ? \033[0m'
 read adminmail
 adminmail=$adminmail
 
 ##proxy
-echo "Proxy ?Y/n"
+echo -e '\033[1;33m Proxy ?Y/n \033[0m'
 read reponse
 
 if [ $reponse = "Y" ];
@@ -36,28 +43,28 @@ echo "ok pas de proxy"
 fi
 
 ##serveur ntp
-echo "serveur ntp ?"
+echo -e '\033[1;33m serveur ntp ? \033[0m'
 read ntp
 ntp=$ntp
 
 ##domaine smtp
-echo "domaine smtp ?"
+echo -e '\033[1;33m domaine smtp ? \033[0m'
 read domainesmtp
 domainesmtp=$domainesmtp
 
 ##relay smtp
-echo "relay smtp ?"
+echo -e '\033[1;33m relay smtp ? \033[0m'
 read relaysmtp
 relaysmtp=$relaysmtp
 
-echo "Vos réponse :"
+echo "Vos réponses :"
 echo "votre mail :" $adminmail;
 echo "votre proxy :" $proxy;
 echo "votre serveur ntp :" $ntp;
 echo "votre domaine smtp :" $domainesmtp;
 echo "votre relay smtp :" $relaysmtp;
 
-echo "La poste configuration de votre serveur PVE va commencer ..."
+echo -e '\033[1;33m La poste configuration de votre serveur PVE va commencer ... \033[0m'
 
 ##ajout du dépot pve-no-subscription, DELL et non-free
 echo -e '\033[1;33m Ajout du depot pve-no-subscription, DELL et non-free \033[0m'
@@ -107,14 +114,13 @@ chmod +x /bin/pigzwrapper
 mv /bin/gzip /bin/gzip.original
 cp /bin/pigzwrapper /bin/gzip
 
-##Mise en place des fichiers de conf snmp
-echo -e '\033[1;33m Mise en place des fichiers de conf pour la supervision \033[0m'
-cd /tmp
-wget -c --no-proxy http://web.domaine.tld/script/snmp/snmpd
-wget -c --no-proxy http://web.domaine.tld/script/snmp/snmpd.conf
-mv snmpd /etc/default/
-mv snmpd.conf /etc/snmp/
-
+##Mise en place des fichiers de conf snmp hébergés ur un serveur web
+#echo -e '\033[1;33m Mise en place des fichiers de conf pour la supervision \033[0m'
+#cd /tmp
+#wget -c --no-proxy http://web.domaine.tld/script/snmp/snmpd
+#wget -c --no-proxy http://web.domaine.tld/script/snmp/snmpd.conf
+#mv snmpd /etc/default/
+#mv snmpd.conf /etc/snmp/
 
 ##Ajout du relais smtp et reload de postfix
 echo -e '\033[1;33m Modification du domaine smtp dans postfix \033[0m' $domainesmtp

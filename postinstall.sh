@@ -13,12 +13,12 @@ echo "############################################"
 echo ""
 ##set variable
 ##mail de l'admin
-echo -e '\033[1;33m Adresse mail de l'administrateur \033[0m'
+echo "Adresse mail de l'administrateur :"
 read adminmail
 adminmail=$adminmail
 
 ##proxy
-echo -e '\033[1;33m Proxy Y/n \033[0m'
+echo "Proxy Y/n"
 read reponse
 
 if [ $reponse = "Y" ];
@@ -40,17 +40,17 @@ echo "ok pas de proxy"
 fi
 
 ##serveur ntp
-echo -e '\033[1;33m serveur ntp \033[0m'
+echo "Serveur ntp :"
 read ntp
 ntp=$ntp
 
 ##domaine smtp
-echo -e '\033[1;33m domaine smtp \033[0m'
+echo "Domaine smtp :"
 read domainesmtp
 domainesmtp=$domainesmtp
 
 ##relay smtp
-echo -e '\033[1;33m relay smtp \033[0m'
+echo "Relay smtp :"
 read relaysmtp
 relaysmtp=$relaysmtp
 

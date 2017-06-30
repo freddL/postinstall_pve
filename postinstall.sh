@@ -140,9 +140,13 @@ echo -e "echo 'Avertissement! Connexion au serveur :' \`hostname\` 'le:' \`date 
 echo -e "PROMPT_COMMAND='history -a >(logger -t \"\$USER[\$PWD] \$SSH_CONNECTION\")'\"" >> /etc/bash.bashrc
 
 ##script Terminer
-echo -e '\033[1;33m Terminer et redémarrage du serveur \033[0m'
-
-#reboot de la machine pour finir
-reboot
-
+echo -e '\033[1;33m Terminer, voulez-vous redémarer le serveur maintenant : Y/n \033[0m'
+read reponse
+if [ $reponse = "Y" ];
+then
+echo "le serveur va redémarrer"
+shutdown -r now
+else
+echo "le serveur doit être redémarrer"
+fi
 exit 0

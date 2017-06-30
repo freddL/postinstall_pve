@@ -118,13 +118,13 @@ cp /bin/pigzwrapper /bin/gzip
 #mv snmpd.conf /etc/snmp/
 
 ##Ajout du relais smtp et reload de postfix
-echo -e '\033[1;33m Modification du domaine smtp dans postfix \033[0m' $domainesmtp
+echo "Modification du domaine smtp dans postfix" $domainesmtp
 sed -i '/^myhostname\=/ s/myhostname\ =.*/myhostname\ =\ '$domainesmtp'/' /etc/postfix/main.cf
-echo -e '\033[1;33m Ajout du relay smtp dans postfix \033[0m' $relaysmtp
+echo "Ajout du relay smtp dans postfix" $relaysmtp
 sed -i '/^relayhost/ s/relayhost\ =.*/relayhost\ =\ '$relaysmtp'/' /etc/postfix/main.cf
 
 ##Paramétrage du apticron
-echo -e '\033[1;33m Ajout pour apticron de la boite mail de l'admin : \033[0m' $adminmail
+echo "Ajout pour apticron de la boite mail de l'admin :"
 sed -i 's/root/'$adminmail'/g' /etc/apticron/apticron.conf
 
 ##Envoie de mail avec le nom et l'IP du nouveau serveur PVE

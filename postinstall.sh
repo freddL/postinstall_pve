@@ -13,17 +13,17 @@ echo "############################################"
 echo ""
 ##set variable
 ##mail de l'admin
-echo -e '\033[1;33m Adresse mail de l'administrateur ? \033[0m'
+echo -e '\033[1;33m Adresse mail de l'administrateur \033[0m'
 read adminmail
 adminmail=$adminmail
 
 ##proxy
-echo -e '\033[1;33m Proxy ?Y/n \033[0m'
+echo -e '\033[1;33m Proxy Y/n \033[0m'
 read reponse
 
 if [ $reponse = "Y" ];
 then
-echo "IP du Proxy ?"
+echo "IP du Proxy"
 read proxy
 ##conf proxy  pour wget
 sed -i 's/proxy\.yoyodyne\.com\:18023/'$proxy':8080/g' /etc/wgetrc
@@ -40,17 +40,17 @@ echo "ok pas de proxy"
 fi
 
 ##serveur ntp
-echo -e '\033[1;33m serveur ntp ? \033[0m'
+echo -e '\033[1;33m serveur ntp \033[0m'
 read ntp
 ntp=$ntp
 
 ##domaine smtp
-echo -e '\033[1;33m domaine smtp ? \033[0m'
+echo -e '\033[1;33m domaine smtp \033[0m'
 read domainesmtp
 domainesmtp=$domainesmtp
 
 ##relay smtp
-echo -e '\033[1;33m relay smtp ? \033[0m'
+echo -e '\033[1;33m relay smtp \033[0m'
 read relaysmtp
 relaysmtp=$relaysmtp
 

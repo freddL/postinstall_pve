@@ -118,9 +118,9 @@ mv snmpd.conf /etc/snmp/
 
 ##Ajout du relais smtp et reload de postfix
 echo -e '\033[1;33m Ajout du relay smtp dans postfix \033[0m'
-sed -i '/^relayhost\ =\ / s/relayhost\ =*/relayhost='$relaysmtp'/' /etc/postfix/main.cf
+sed -i '/^relayhost/ s/relayhost\ =.*/relayhost\ =\ '$relaysmtp'/' /etc/postfix/main.cf
 echo -e '\033[1;33m Modification du domaine smtp  dans postfix \033[0m'
-sed -i '/^myhostname\=/ s/myhostname=.*/myhostname='$domainesmtp'/' /etc/postfix/main.cf
+sed -i '/^myhostname\=/ s/myhostname\ =.*/myhostname\ =\ '$domainesmtp'/' /etc/postfix/main.cf
 
 
 ##Paramétrage du apticron

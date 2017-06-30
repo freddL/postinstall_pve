@@ -55,7 +55,7 @@ echo "votre mail :" $adminmail;
 echo "votre proxy :" $proxy;
 echo "votre serveur ntp :" $ntp;
 echo "votre domaine smtp :" $domainesmtp;
-echo "votre relay smtp :" $relaysmtp
+echo "votre relay smtp :" $relaysmtp;
 
 echo "La poste configuration de votre serveur PVE va commencer..."
 

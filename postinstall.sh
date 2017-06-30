@@ -19,7 +19,7 @@ read reponse
 
 if [ $reponse = "Y" ];
 then
-echo "Ip du Proxy ?"
+echo "IP du Proxy ?"
 read proxy
 ##conf proxy  pour wget
 sed -i 's/proxy\.yoyodyne\.com\:18023/'$proxy':8080/g' /etc/wgetrc

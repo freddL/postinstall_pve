@@ -1,19 +1,16 @@
 #!/bin/bash
 
-##script post-installation pour les serveurs Proxmox sur des machines DELL
-##Date : 21/06/2017
-##Auteur : Freddy
-##Version : 1.0
-##Licence : WTFPL (https://fr.wikipedia.org/wiki/WTFPL)
-
-echo "############################################"
-echo "#######Script pour configurer Proxmox#######"
+echo "## script post-installation pour les serveurs Proxmox sur des machines DELL ###"
+echo " ## Date : 21/06/2017                                                       ###"
+echo " ## Auteur : Freddy                                                         ###"
+echo " ## Version : 1.0                                                           ###"
+echo " ## Licence : WTFPL (https://fr.wikipedia.org/wiki/WTFPL)                   ###"
+echo ""
 echo "############################################"
 echo "############################################"
+echo "## Veuillez répondre questions suivantes ###"
 echo "############################################"
-echo "####Veuillez répondre questions suivante####"
-echo "############################################"
-
+echo ""
 ##set variable
 ##mail de l'admin
 echo -e '\033[1;33m Adresse mail de l'administrateur ? \033[0m'

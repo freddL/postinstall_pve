@@ -90,7 +90,7 @@ echo -e '\033[1;33m Installation d'outils et d'Openmanage \033[0m'
 apt install -y pigz htop iptraf iotop iftop snmpd ntp ncdu ethtool srvadmin-deng-snmp srvadmin-storage-snmp srvadmin-storage srvadmin-storage-cli srvadmin-storageservices srvadmin-idracadm8 srvadmin-base snmp-mibs-downloader apticron --force-yes 
 
 ##ajout du serveur ntp.i2
-sed -i "s/0.debian.pool.ntp.org/"$ntp"/g" /etc/systemd/timesyncd.conf  
+sed -i 's/0.debian.pool.ntp.org/'$ntp'/g' /etc/systemd/timesyncd.conf  
 timedatectl set-ntp true
 date
 ##remplacement de gzip par pigz
@@ -121,7 +121,7 @@ grep $domainesmtp /etc/postfix/main.cf
 if [ $? = "1" ]
 then
 echo -e '\033[1;33m Ajout du relay smtp dans postfix \033[0m'
-sed -i '/^relayhost\=/ s/relayhost=*.*/relayhost='$relaysmtp'/' /etc/postfix/main.cf
+sed -i '/^relayhost\=/ s/relayhost=*/relayhost='$relaysmtp'/' /etc/postfix/main.cf
 echo -e '\033[1;33m Modification du domaine smtp  dans postfix \033[0m'
 sed -i '/^myhostname\=/ s/myhostname=.*/myhostname='$domainesmtp'/' /etc/postfix/main.cf
 else

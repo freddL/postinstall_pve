@@ -80,7 +80,7 @@ echo -e '\033[1;33m Ajout de la clé pour le dépôt DELL \033[0m'
 gpg --list-sigs 1285491434D8786F
 if [ $? = 1 ]
 then
-gpg --keyserver-options http-proxy=http://direct1.proxy.i2:8080 --keyserver hkp://pool.sks-keyservers.net:80 --recv-key 1285491434D8786F 
+gpg --keyserver-options http-proxy=http://$proxy:8080 --keyserver hkp://pool.sks-keyservers.net:80 --recv-key 1285491434D8786F 
 gpg -a --export 1285491434D8786F | apt-key add -
 else
 echo "clé déjà importée"

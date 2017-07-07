@@ -149,6 +149,6 @@ then
 echo "le serveur va redémarrer"
 shutdown -r now
 else
-echo "le serveur doit être redémarrer"
+echo "le serveur doit être redémarré"
 fi
 exit 0

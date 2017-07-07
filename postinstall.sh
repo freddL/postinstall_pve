@@ -89,10 +89,10 @@ fi
 ##maj proxmox + install outils et srvadmin 
 echo -e '\033[1;33m Mise a jour du serveur Proxmox \033[0m'
 apt update && apt -y full-upgrade && apt -y dist-upgrade
-echo -e '\033[1;33m Installation des outils\033[0m'
+echo -e '\033[1;33m Installation d'outils et OpenManage \033[0m'
 apt install -y pigz htop iptraf iotop iftop snmpd ntp ncdu ethtool  snmp-mibs-downloader apticron --force-yes 
-echo -e '\033[1;33m Installation d'OpenManage \033[0m'
 apt install -y srvadmin-deng-snmp srvadmin-storage-snmp srvadmin-storage srvadmin-storage-cli srvadmin-storageservices srvadmin-idracadm8 srvadmin-base --force-yes 
+
 ##ajout du serveur ntp.i2
 sed -i 's/0.debian.pool.ntp.org/'$ntp'/g' /etc/systemd/timesyncd.conf  
 timedatectl set-ntp true

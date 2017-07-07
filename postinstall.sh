@@ -60,6 +60,7 @@ echo "votre domaine smtp :" $domainesmtp;
 echo "votre relay smtp :" $relaysmtp;
 
 echo -e '\033[1;33m La poste configuration de votre serveur PVE va commencer ... \033[0m'
+sleep 3
 
 ##ajout du dépot pve-no-subscription, DELL et non-free
 echo -e '\033[1;33m Ajout du depot pve-no-subscription, DELL et non-free \033[0m'

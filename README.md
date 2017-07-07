@@ -17,5 +17,7 @@ Exécuter le script :
 Dans le cas d'un Proxmox en Entreprise derrière un proxy :
 
 https_proxy="http://Ip_PROXY:PORT/" wget -c https://raw.githubusercontent.com/freddL/postinstall_pve/master/postinstall.sh -O postinstall.sh
+
 chmod +x postinstall.sh
+
 ./postinstall.sh

@@ -94,7 +94,7 @@ apt install -y pigz htop iptraf iotop iftop snmpd ntp ncdu ethtool  snmp-mibs-do
 apt install -y srvadmin-deng-snmp srvadmin-storage-snmp srvadmin-storage srvadmin-storage-cli srvadmin-storageservices srvadmin-idracadm8 srvadmin-base --force-yes 
 
 ##ajout du serveur ntp.i2
-sed -i 's/0.debian.pool.ntp.org/'$ntp'/g' /etc/systemd/timesyncd.conf  
+sed -i '/^#Server/ s/#Servers=.*/Servers='$ntp'/g' /etc/systemd/timesyncd.conf
 timedatectl set-ntp true
 date
 ##remplacement de gzip par pigz
@@ -121,7 +121,7 @@ cp /bin/pigzwrapper /bin/gzip
 
 ##Ajout du relais smtp et reload de postfix
 echo "Modification du domaine smtp dans postfix" $domainesmtp
-sed -i '/^myhostname\=/ s/myhostname\ =.*/myhostname\ =\ '$domainesmtp'/' /etc/postfix/main.cf
+sed -i '/^myhostname/ s/myhostname=.*/myhostname='$domainesmtp'/' /etc/postfix/main.cf
 echo "Ajout du relay smtp dans postfix" $relaysmtp
 sed -i '/^relayhost/ s/relayhost\ =.*/relayhost\ =\ '$relaysmtp'/' /etc/postfix/main.cf
 

@@ -93,10 +93,15 @@ echo -e '\033[1;33m Installation des outils et OpenManage \033[0m'
 apt install -y pigz htop iptraf iotop iftop snmpd ntp ncdu ethtool  snmp-mibs-downloader apticron --force-yes 
 apt install -y srvadmin-deng-snmp srvadmin-storage-snmp srvadmin-storage srvadmin-storage-cli srvadmin-storageservices srvadmin-idracadm8 srvadmin-base --force-yes 
 
-##ajout du serveur ntp.i2
+##configuration du ntp pour Proxmox 4
 sed -i '/^#Server/ s/#Servers=.*/Servers='$ntp'/g' /etc/systemd/timesyncd.conf
 timedatectl set-ntp true
-date
+##pour Proxmox 5 (merci à Typhoe : https://memo-linux.com/proxmox-script-post-installation/#comment-68402)
+#sed -i ‘/^#NTP/ s/#NTP=.*/NTP=' »${NtpServers} »‘/g’ /etc/systemd/timesyncd.conf
+#[ -s /usr/sbin/ntpd ] && apt -y purge ntp
+#systemctl restart systemd-timesyncd
+#timedatectl status
+
 ##remplacement de gzip par pigz
 ##pour pigz, je lui attribu que le nombre de tread par cpu 
 echo -e '\033[1;33m Remplacement de Gzip par Pigz \033[0m'
@@ -119,11 +124,10 @@ cp /bin/pigzwrapper /bin/gzip
 #mv snmpd /etc/default/
 #mv snmpd.conf /etc/snmp/
 
-##Ajout du relais smtp et reload de postfix
-echo "Modification du domaine smtp dans postfix" $domainesmtp
-sed -i '/^myhostname/ s/myhostname=.*/myhostname='$domainesmtp'/' /etc/postfix/main.cf
-echo "Ajout du relay smtp dans postfix" $relaysmtp
-sed -i '/^relayhost/ s/relayhost\ =.*/relayhost\ =\ '$relaysmtp'/' /etc/postfix/main.cf
+##paramétrage de postfix 
+postconf -e "relayhost=${relaysmtp} »
+postconf -e "myhostname=${domainesmtp}"
+postconf -e "inet_protocols = ipv4"
 
 ##Paramétrage du apticron
 echo "Ajout pour apticron de la boite mail de l'admin :"

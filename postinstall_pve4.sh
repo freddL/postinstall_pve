@@ -96,11 +96,6 @@ apt install -y srvadmin-deng-snmp srvadmin-storage-snmp srvadmin-storage srvadmi
 ##configuration du ntp pour Proxmox 4
 sed -i '/^#Server/ s/#Servers=.*/Servers='$ntp'/g' /etc/systemd/timesyncd.conf
 timedatectl set-ntp true
-##pour Proxmox 5 (merci à Typhoe : https://memo-linux.com/proxmox-script-post-installation/#comment-68402)
-#sed -i ‘/^#NTP/ s/#NTP=.*/NTP=' »${NtpServers} »‘/g’ /etc/systemd/timesyncd.conf
-#[ -s /usr/sbin/ntpd ] && apt -y purge ntp
-#systemctl restart systemd-timesyncd
-#timedatectl status
 
 ##remplacement de gzip par pigz
 ##pour pigz, je lui attribu que le nombre de tread par cpu 
@@ -142,7 +137,7 @@ echo "Nouveau serveur Proxmox {hostname -f} vient d'être installé.\n A mettre 
 sed -i.bak 's/NotFound/Active/g' /usr/share/perl5/PVE/API2/Subscription.pm
 
 ##modification du bashrc pour notification de connexion ssh avec l'history
-echo -e "echo 'Avertissement! Connexion au serveur :' \`hostname\` 'le:' \`date +'%Y/%m/%d'\` \`who | grep -v localhost\` | mail -s \"[ \`hostname\` ] Avertissement!!! connexion au serveur le: \`date +'%Y/%m/%d'\` \`who | grep -v localhost | awk {'print $5'}\`\"$adminmail\"" >> /etc/bash.bashrc
+echo -e "echo 'Avertissement! Connexion au serveur :' \`hostname\` 'par:' \`who | grep -v localhost\` | mail -s \"[ \`hostname\` ] Avertissement!!! connexion au serveur le: \`date +'%Y/%m/%d'\` \`who | grep -v localhost | awk {'print $5'}\`\"$adminmail\"" >> /etc/bash.bashrc
 echo -e "PROMPT_COMMAND='history -a >(logger -t \"\$USER[\$PWD] \$SSH_CONNECTION\")'\"" >> /etc/bash.bashrc
 
 ##script Terminer

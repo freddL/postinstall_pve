@@ -138,7 +138,7 @@ echo "Mettre en supervision ce nouveau serveur Proxmox :" | mail -s "Nouveau Ser
 sed -i.bak 's/NotFound/Active/g' /usr/share/perl5/PVE/API2/Subscription.pm
 
 ##modification du bashrc pour notification de connexion ssh avec l'history
-echo -e "echo 'Avertissement! Connexion au serveur :' \`hostname\` 'le:' \`date +'%Y/%m/%d'\` \`who | grep -v localhost\` | mail -s \"[ \`hostname\` ] Avertissement!!! connexion au serveur le: \`date +'%Y/%m/%d'\`  \`who | grep -v localhost | awk {'print $5'}\`$adminmail" >> /etc/bash.bashrc
+echo -e "echo 'Avertissement! Connexion au serveur :' \`hostname\` 'par:' \`who | grep -v localhost\` | mail -s \"[ \`hostname\` ] Avertissement!!! connexion au serveur le: \`date +'%Y/%m/%d'\`  \`who | grep -v localhost | awk {'print $5'}\`$adminmail" >> /etc/bash.bashrc
 echo -e "PROMPT_COMMAND='history -a >(logger -t \"\$USER[\$PWD] \$SSH_CONNECTION\")'\"" >> /etc/bash.bashrc
 
 read -r -p "Terminer, voulez-vous redémarrer le serveur maintenant ? <Y/n> " prompt

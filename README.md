@@ -2,10 +2,11 @@
 Script de post-installation pour Proxmox
 plus d'infos : https://memo-linux.com/proxmox-script-post-installation/
 
-Télécharger le script :
+<ul>
+<li>Télécharger le script :</li>
 git clone https://github.com/freddL/postinstall_pve.git
 
-Se rendre dans le dossier :
+<li>Se rendre dans le dossier :
 cd postinstall_pve/
 
 Dans le dossier se trouve deux script : postinstall_pve4.sh et postinstall_pve5.sh
@@ -27,6 +28,8 @@ chmod +x postinstall_pve5.sh
   <li>Exécuter le script :</li>
 ./postinstall_pve5.sh
   </ul></li>
+  </ul>
+  </li>
   </ul>
   <ul>
   <li>Dans le cas d'un Proxmox 4 en Entreprise derrière un proxy :

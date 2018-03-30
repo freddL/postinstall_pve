@@ -9,7 +9,6 @@ Se rendre dans le dossier :
 cd postinstall_pve/
 
 Dans le dossier se trouve deux script : postinstall_pve4.sh et postinstall_pve5.sh
-Choisir le script par rapport à votre version de Proxmox.
 
 Pour Proxmox 4 :
 Rendre le script éxécutable :

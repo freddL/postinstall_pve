@@ -34,3 +34,4 @@ chmod +x postinstall.sh
 ./postinstall.sh
 
 
+nb : la syntaxe des scripts testée avec https://www.shellcheck.net/

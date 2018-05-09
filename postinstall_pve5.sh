@@ -135,7 +135,8 @@ hostname -i >> info.txt
 echo "Mettre en supervision ce nouveau serveur Proxmox :" | mail -s "Nouveau Serveur Proxmox" "$adminmail" < info.txt 
 
 ##supprimer baniere
-sed -i.bak 's/NotFound/Active/g' /usr/share/perl5/PVE/API2/Subscription.pm
+#sed -i.bak 's/NotFound/Active/g' /usr/share/perl5/PVE/API2/Subscription.pm
+sed -i.back '/Proxmox.Utils.checked_command(function() {});/ s/^/\/\//' /usr/share/pve-manager/js/pvemanagerlib.js
 
 ##modification du bashrc pour notification de connexion ssh avec l'history
 echo -e "echo 'Avertissement! Connexion au serveur :' \`hostname\` 'par:' \`who | grep -v localhost\` | mail -s \"[ \`hostname\` ] Avertissement!!! connexion au serveur le: \`date +'%Y/%m/%d'\`  \`who | grep -v localhost | awk {'print $5'}\`$adminmail" >> /etc/bash.bashrc

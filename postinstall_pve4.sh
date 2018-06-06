@@ -12,12 +12,11 @@ echo ""
 ##set variable
 ##mail de l'admin
 echo "Adresse mail de l'administrateur :"
-read adminmail
-adminmail=$adminmail
+read -r adminmail
 
 ##proxy
 echo "Proxy Y/n"
-read reponse
+read -r reponse
 
 if [ $reponse = "Y" ];
 then
@@ -39,18 +38,15 @@ fi
 
 ##serveur ntp
 echo "Serveur ntp :"
-read ntp
-ntp=$ntp
+read -r ntp
 
 ##domaine smtp
 echo "Domaine smtp :"
-read domainesmtp
-domainesmtp=$domainesmtp
+read -r domainesmtp
 
 ##relay smtp
 echo "Relay smtp :"
-read relaysmtp
-relaysmtp=$relaysmtp
+read -r relaysmtp
 
 echo "Vos réponses :"
 echo "votre mail :" $adminmail;

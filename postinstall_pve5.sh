@@ -14,7 +14,6 @@ echo ""
 ##mail de l'admin
 echo "Votre Adresse mail :"
 read -r adminmail
-adminmail=$adminmail
 
 ##gestion du proxy local
 read -r -p "Aves-vous un proxy local ? <Y/n> " prompt
@@ -22,7 +21,6 @@ if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]
 then
 echo "IP du Proxy local"
 read -r proxy
-proxy=$proxy
 else
 echo "ok pas de proxy local"
 noproxy=1

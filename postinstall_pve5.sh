@@ -61,19 +61,24 @@ echo 'Acquire::http::Proxy "http://proxy:8080/";' > /etc/apt/apt.conf
 sed -i 's/proxy/'"$proxy"'/g' /etc/apt/apt.conf
 fi
 
-##ajout du dépot pve-no-subscription, DELL et non-free
+##ajout du dépot pve-no-subscription et non-free
 echo -e '\033[1;33m Ajout du depot pve-no-subscription, DELL et non-free \033[0m'
 echo "deb http://download.proxmox.com/debian stretch pve-no-subscription" > /etc/apt/sources.list.d/pve-enterprise.list
-echo "deb http://linux.dell.com/repo/community/openmanage/901/xenial xenial main" > /etc/apt/sources.list.d/linux.dell.com.sources.list
-
 grep 'non-free' /etc/apt/sources.list
 if [ $? = "1" ]
 then
 sed -i "s/main/main\\ non-free/g" /etc/apt/sources.list
 else
 echo "non-free existant"
-fi
 
+##maj proxmox + install outils
+echo -e '\033[1;33m Mise a jour du serveur Proxmox \033[0m'
+apt update && apt -y full-upgrade && apt -y dist-upgrade
+echo -e '\033[1;33m Installation des outils \033[0m'
+apt install -y  dirmngr pigz htop iptraf iotop iftop snmpd ntp ncdu ethtool  snmp-mibs-downloader apticron --force-yes
+
+##ajout du dépot DELL
+echo "deb http://linux.dell.com/repo/community/openmanage/910/xenial xenial main" > /etc/apt/sources.list.d/linux.dell.com.sources.list
 ##Ajout de la clé pour le dépôt DELL
 echo -e '\033[1;33m Ajout de la clé pour le dépôt DELL \033[0m'
 gpg --list-sigs 1285491434D8786F
@@ -82,12 +87,8 @@ then
 gpg --keyserver-options http-proxy=http://"$proxy":8080 --keyserver hkp://pool.sks-keyservers.net:80 --recv-key 1285491434D8786F
 gpg -a --export 1285491434D8786F | apt-key add -
 fi
-
-##maj proxmox + install outils et srvadmin
-echo -e '\033[1;33m Mise a jour du serveur Proxmox \033[0m'
-apt update && apt -y full-upgrade && apt -y dist-upgrade
-echo -e '\033[1;33m Installation des outils et OpenManage \033[0m'
-apt install -y pigz htop iptraf iotop iftop snmpd ntp ncdu ethtool  snmp-mibs-downloader apticron --force-yes
+echo -e '\033[1;33m Installation de Openmanage \033[0m'
+apt update
 apt install -y srvadmin-deng-snmp srvadmin-storage-snmp srvadmin-storage srvadmin-storage-cli srvadmin-storageservices srvadmin-idracadm8 srvadmin-base --force-yes
 
 ##ajout du serveur ntp

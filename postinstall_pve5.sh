@@ -70,6 +70,7 @@ then
 sed -i "s/main/main\\ non-free/g" /etc/apt/sources.list
 else
 echo "non-free existant"
+fi
 
 ##maj proxmox + install outils
 echo -e '\033[1;33m Mise a jour du serveur Proxmox \033[0m'

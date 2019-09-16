@@ -28,6 +28,14 @@ chmod +x postinstall_pve5.sh
   <li>Exécuter le script :</li>
 ./postinstall_pve5.sh
   </ul></li>
+  
+  <li>Pour Proxmox 6 :
+<ul>
+  <li>Rendre le script éxécutable :</li>
+chmod +x postinstall_pve6.sh
+  <li>Exécuter le script :</li>
+./postinstall_pve5.sh
+  </ul></li>
   </ul>
   </li>
   </ul>
@@ -47,6 +55,17 @@ chmod +x postinstall.sh
     <ul>
       <li>Télécharger le script :</li>
 https_proxy="http://IP_PROXY:PORT/" wget -c https://raw.githubusercontent.com/freddL/postinstall_pve/master/postinstall_pve5.sh -O postinstall.sh
+      <li>Rendre le script exécutable :</li>
+chmod +x postinstall.sh
+      <li>Exécuter le script :</li>
+./postinstall.sh
+      </ul>
+  </li>
+  
+  <li>Dans le cas d'un Proxmox 6 en Entreprise derrière un proxy :
+    <ul>
+      <li>Télécharger le script :</li>
+https_proxy="http://IP_PROXY:PORT/" wget -c https://raw.githubusercontent.com/freddL/postinstall_pve/master/postinstall_pve6.sh -O postinstall.sh
       <li>Rendre le script exécutable :</li>
 chmod +x postinstall.sh
       <li>Exécuter le script :</li>

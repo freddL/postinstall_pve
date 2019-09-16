@@ -116,6 +116,8 @@ postconf -e "relayhost=${relaysmtp}"
 postconf -e "myhostname=${domainesmtp}"
 postconf -e "inet_protocols = ipv4"
 postconf compatibility_level=2
+##pour éviter erreur : error: open database /etc/aliases.db: No such file or directory
+newaliases
 postfix reload
 
 ##Paramétrage du apticron

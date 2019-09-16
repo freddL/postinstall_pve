@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "########################################################################"
-echo " ## script post-installation pour Proxmox 6 sur des serveurs DELL    ###"
+echo " ## script post-installation pour Proxmox 6                          ###"
 echo " ### Date : 16/09/2019                                               ###"
 echo " ### Auteur : fred                                                   ###"
 echo " ### web site : https://memo-linux.com                               ###"

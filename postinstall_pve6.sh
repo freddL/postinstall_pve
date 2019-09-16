@@ -115,6 +115,7 @@ cp /bin/pigzwrapper /bin/gzip
 postconf -e "relayhost=${relaysmtp}"
 postconf -e "myhostname=${domainesmtp}"
 postconf -e "inet_protocols = ipv4"
+postconf compatibility_level=2
 postfix reload
 
 ##Paramétrage du apticron

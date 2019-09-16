@@ -120,6 +120,9 @@ postconf -e "inet_protocols = ipv4"
 postconf compatibility_level=2
 postfix reload
 
+#configuraiton du mail pour root
+sed -i "s/mail@example.fr/'"$adminmail"'/" /etc/pve/user.cfg
+
 ##Paramétrage du apticron
 echo "Ajout pour apticron de la boite mail de l'admin :"
 cp /usr/lib/apticron/apticron.conf /etc/apticron/

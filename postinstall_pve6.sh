@@ -142,9 +142,6 @@ echo "#!/bin/sh" > /etc/cron.daily/pve-nosub.sh
 echo "sed -i "s/data.status !== 'Active'/false/g" /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js" >> /etc/cron.daily/pve-nosub.sh
 chmod a+x /etc/cron.daily/pve-nosub.sh
   
-##modification du bashrc pour notification de connexion ssh avec l'history
-echo -e "echo 'Avertissement! Connexion au serveur :' \`hostname\` 'par:' \`who | grep -v localhost\` | mail -s \"[ \`hostname\` ] Avertissement!!! connexion au serveur le: \`date +'%Y/%m/%d'\`  \`who | grep -v localhost | awk {'print $5'}\`$adminmail" >> /etc/bash.bashrc
-echo -e "PROMPT_COMMAND='history -a >(logger -t \"\$USER[\$PWD] \$SSH_CONNECTION\")'\"" >> /etc/bash.bashrc
 read -r -p "Terminer, voulez-vous redémarrer le serveur maintenant ? <Y/n> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then

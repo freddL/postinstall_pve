@@ -34,7 +34,7 @@ chmod +x postinstall_pve5.sh
   <li>Rendre le script éxécutable :</li>
 chmod +x postinstall_pve6.sh
   <li>Exécuter le script :</li>
-./postinstall_pve5.sh
+./postinstall_pve6.sh
   </ul></li>
   </ul>
   </li>

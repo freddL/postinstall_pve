@@ -140,7 +140,7 @@ sed -i "s/data.status !== 'Active'/false/g" /usr/share/javascript/proxmox-widget
 # creation tache de verification de desactivation de la banniere
 touch /etc/cron.daily/pve-nosub
 echo "#!/bin/sh" > /etc/cron.daily/pve-nosub
-echo "sed -i "s/data.status !== 'Active'/false/g" /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js" >> /etc/cron.daily/pve-nosub
+echo "sed -i \"s/data.status !== 'Active'/false/g\" /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js" >> /etc/cron.daily/pve-nosub
 chmod a+x /etc/cron.daily/pve-nosub
   
 read -r -p "Terminer, voulez-vous redémarrer le serveur maintenant ? <Y/n> " prompt

@@ -93,6 +93,7 @@ timedatectl set-ntp true
 
 ##remplacement de gzip par pigz
 ##pour pigz, je lui attribu que le nombre de tread par cpu
+if [ ! -f "/bin/pigzwrapper" ];then
 echo -e '\033[1;33m Remplacement de Gzip par Pigz \033[0m'
 touch /bin/pigzwrapper
 echo '#!/bin/sh' > /bin/pigzwrapper
@@ -104,6 +105,7 @@ sed -i 's/cpu/'"$cpu"'/g' /bin/pigzwrapper
 chmod +x /bin/pigzwrapper
 mv /bin/gzip /bin/gzip.original
 cp /bin/pigzwrapper /bin/gzip
+fi
 
 ##Mise en place des fichiers de conf snmp hébergés ur un serveur web
 #echo -e '\033[1;33m Mise en place des fichiers de conf pour la supervision \033[0m'
@@ -138,11 +140,13 @@ echo "Mettre en supervision ce nouveau serveur Proxmox :" | mail -s "Nouveau Ser
 sed -i "s/data.status !== 'Active'/false/g" /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
 
 # creation tache de verification de desactivation de la banniere
+if [ ! -f "/etc/cron.daily/pve-nosub" ];then
 touch /etc/cron.daily/pve-nosub
 echo "#!/bin/sh" > /etc/cron.daily/pve-nosub
 echo "sed -i \"s/data.status !== 'Active'/false/g\" /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js" >> /etc/cron.daily/pve-nosub
 chmod a+x /etc/cron.daily/pve-nosub
-  
+fi
+
 read -r -p "Terminer, voulez-vous redémarrer le serveur maintenant ? <Y/n> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then

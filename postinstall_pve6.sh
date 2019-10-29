@@ -43,6 +43,16 @@ read -r domainesmtp
 echo "Votre relay smtp :"
 read -r relaysmtp
 
+read -r -p "Noeud utilisé pour de la réplication ? <O/N> " prompt
+if [[ $prompt == "N" || $prompt == "n" ]] ; then
+echo -e "${tnorm}"
+cp /etc/systemd/system/pvesr.timer pvesr.timer.old
+sed -i 's/OnCalendar=minutely/OnCalendar=monthly/g' /etc/systemd/system/pvesr.timer
+sed -i 's/OnCalendar=minutely/OnCalendar=monthly/g' /lib/systemd/system/pvesr.timer
+systemctl daemon-reload
+echo "Délai service réplication passé à monthly. Pour vérifier (attendre un peu...) : zgrep replication /var/log/syslog*"
+fi 
+
 echo "Vos réponses :"
 echo "votre mail :" "$adminmail";
 echo "votre proxy :" "$proxy";

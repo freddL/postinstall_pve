@@ -2,6 +2,7 @@
 echo "########################################################################"
 echo " ## script post-installation pour Proxmox 6                          ###"
 echo " ### Date : 16/09/2019                                               ###"
+echo " ### Modifier le : 11/12/2019                                       ###"
 echo " ### Auteur : fred                                                   ###"
 echo " ### web site : https://memo-linux.com                               ###"
 echo " ### Version : 1.0                                                   ###"
@@ -91,7 +92,7 @@ fi
 echo -e '\033[1;33m Mise a jour du serveur Proxmox \033[0m'
 apt update && apt -y full-upgrade && apt -y dist-upgrade
 echo -e '\033[1;33m Installation des outils \033[0m'
-apt install -y  dirmngr pigz htop iptraf iotop iftop snmpd ntp ncdu ethtool snmp-mibs-downloader apticron net-tools dnsutils --force-yes
+apt install -y  dirmngr pigz htop iptraf iotop iftop snmpd ntp ncdu ethtool snmp-mibs-downloader apticron net-tools dnsutils ifupdown2 mlocate --force-yes
 apt autoremove -y
 
 ##Configuration du serveur ntp

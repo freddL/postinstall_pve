@@ -2,7 +2,7 @@
 echo "########################################################################"
 echo " ## script post-installation pour Proxmox 6                          ###"
 echo " ### Date : 16/09/2019                                               ###"
-echo " ### Modifier le : 11/12/2019                                       ###"
+echo " ### Modification : 11/12/2019                                       ###"
 echo " ### Auteur : fred                                                   ###"
 echo " ### web site : https://memo-linux.com                               ###"
 echo " ### Version : 1.0                                                   ###"
@@ -27,6 +27,8 @@ if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]
 then
 echo "Votre serveur proxy"
 read -r proxy
+echo "Port du proxy"
+read -r portproxy
 else
 echo "ok pas de serveur proxy"
 noproxy=1
@@ -55,7 +57,7 @@ fi
 
 echo "Vos réponses :"
 echo "votre mail :" "$adminmail";
-echo "votre proxy :" "$proxy";
+echo "votre proxy :" "$proxy":"$portproxy";
 echo "votre serveur ntp :" "$ntp";
 echo "votre domaine smtp :" "$domainesmtp";
 echo "votre relay smtp :" "$relaysmtp";
@@ -71,9 +73,7 @@ sed -i 's/\#http\_proxy/http\_proxy/g' /etc/wgetrc
 sed -i 's/\#ftp\_proxy/ftp\_proxy/g' /etc/wgetrc
 sed -i 's/\#use\_proxy/use\_proxy/g' /etc/wgetrc
 
-touch /etc/apt/apt.conf
-echo 'Acquire::http::Proxy "http://proxy:8080/";' > /etc/apt/apt.conf
-sed -i 's/proxy/'"$proxy"'/g' /etc/apt/apt.conf
+echo 'Acquire::http::Proxy "http://'"$proxy"':'"$portproxy"'/";' > /etc/apt/apt.conf.d/76pveproxy
 fi
 
 ##ajout du dépot pve-no-subscription et non-free

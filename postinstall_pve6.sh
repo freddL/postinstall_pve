@@ -2,7 +2,7 @@
 echo "########################################################################"
 echo " ## script post-installation pour Proxmox 6                          ###"
 echo " ### Date : 16/09/2019                                               ###"
-echo " ### Modification : 11/12/2019                                       ###"
+echo " ### Modification : 28/09/2020                                       ###"
 echo " ### Auteur : fred                                                   ###"
 echo " ### web site : https://memo-linux.com                               ###"
 echo " ### Version : 1.0                                                   ###"

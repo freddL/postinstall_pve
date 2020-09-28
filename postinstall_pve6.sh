@@ -92,8 +92,9 @@ fi
 echo -e '\033[1;33m Mise a jour du serveur Proxmox \033[0m'
 apt update && apt -y full-upgrade && apt -y dist-upgrade
 echo -e '\033[1;33m Installation des outils \033[0m'
-apt install -y  dirmngr pigz htop iptraf iotop iftop snmpd ntp ncdu ethtool snmp-mibs-downloader apticron net-tools dnsutils ifupdown2 mlocate --force-yes
+apt install -y  dirmngr pigz htop iptraf iotop iftop snmpd ncdu ethtool snmp-mibs-downloader apticron net-tools dnsutils ifupdown2 mlocate screen ncdu ntfs-3g --force-yes
 apt autoremove -y
+apt clean
 
 ##Configuration du serveur ntp
 sed -i '/^#NTP/ s/#NTP=.*/NTP='"$ntp"'/g' /etc/systemd/timesyncd.conf

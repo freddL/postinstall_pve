@@ -118,13 +118,6 @@ mv /bin/gzip /bin/gzip.original
 cp /bin/pigzwrapper /bin/gzip
 fi
 
-##Mise en place des fichiers de conf snmp hébergés ur un serveur web
-#echo -e '\033[1;33m Mise en place des fichiers de conf pour la supervision \033[0m'
-#wget -c --no-proxy --no-check-certificate https://snmpd.domaine.tld/rep/snmpd
-#wget -c --no-proxy --no-check-certificate https://snmpd.domaine.tld/rep/snmpd.conf
-#mv snmpd /etc/default/
-#mv snmpd.conf /etc/snmp/
-
 ##paramétrage de postfix 
 ##pour éviter erreur : error: open database /etc/aliases.db: No such file or directory
 newaliases

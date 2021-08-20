@@ -96,10 +96,8 @@ apt autoremove -y
 apt clean
 
 ##Configuration du serveur ntp
-sed -i '/^#NTP/ s/#NTP=.*/NTP='"$ntp"'/g' /etc/systemd/timesyncd.conf
-apt -y purge ntp
-systemctl restart systemd-timesyncd
-timedatectl set-ntp true
+echo "server '"$ntp"' iburst" > /etc/chrony/chrony.conf
+systemctl restart chronyd
 
 ##remplacement de gzip par pigz
 ##pour pigz, je lui attribu que le nombre de tread par cpu

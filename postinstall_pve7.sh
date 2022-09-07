@@ -96,7 +96,7 @@ apt autoremove -y
 apt clean
 
 ##Configuration du serveur ntp
-echo "server '"$ntp"' iburst" > /etc/chrony/chrony.conf
+echo "server $ntp iburst" > /etc/chrony/chrony.conf
 systemctl restart chronyd
 
 ##remplacement de gzip par pigz
@@ -125,7 +125,8 @@ postconf compatibility_level=2
 postfix reload
 
 #configuraiton du mail pour root
-sed -i "s/mail@example.fr/'"$adminmail"'/" /etc/pve/user.cfg
+installmail=$(egrep -o '[[:alnum:]_.-]+@[[:alnum:].]+' /etc/pve/user.cfg | grep -v root@pam)
+sed -i "s/'"$installmail"'/'"$adminmail"'/" /etc/pve/user.cfg
 
 ##Paramétrage du apticron
 echo "Ajout pour apticron de la boite mail de l'admin :"

@@ -1,8 +1,8 @@
 #!/bin/bash
 echo "########################################################################"
-echo " ## script post-installation pour Proxmox .x                          ###"
+echo " ## script post-installation pour Proxmox 7.x                        ###"
 echo " ### Date : 06/08/2021                                               ###"
-echo " ### Modification : 06/08/2021                                       ###"
+echo " ### Modification : 07/09/2022                                       ###"
 echo " ### Auteur : fred                                                   ###"
 echo " ### web site : https://memo-linux.com                               ###"
 echo " ### Version : 1.0                                                   ###"
@@ -140,6 +140,7 @@ echo "Mettre en supervision ce nouveau serveur Proxmox :" | mail -s "Nouveau Ser
 
 ##suppression baniere : pour l'instant ne fonctionne pas
 #sed -i "s/data.status !== 'Active'/false/g" /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
+sed -Ezi.bak "s/(Ext.Msg.show\(\{\s+title: gettext\('No valid sub)/void\(\{ \/\/\1/g" /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
 
 # creation tache de verification de desactivation de la banniere
 #if [ ! -f "/etc/cron.daily/pve-nosub" ];then

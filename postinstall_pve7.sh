@@ -25,7 +25,7 @@ read -r adminmail
 read -r -p "Aves-vous un proxy local ? <Y/n> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then
-echo "Votre serveur proxy"
+echo "Votre serveur proxy sans le port (IP ou nom DNS)"
 read -r proxy
 echo "Port du proxy"
 read -r portproxy
@@ -46,14 +46,14 @@ read -r domainesmtp
 echo "Votre relay smtp :"
 read -r relaysmtp
 
-read -r -p "Noeud utilisé pour de la réplication ? <O/N> " prompt
-if [[ $prompt == "N" || $prompt == "n" ]] ; then
-echo -e "${tnorm}"
-sed -i 's/OnCalendar=minutely/OnCalendar=monthly/g' /etc/systemd/system/timers.target.wants/pvesr.timer &>/dev/nul
-sed -i 's/OnCalendar=minutely/OnCalendar=monthly/g' /usr/lib/systemd/system/pvesr.timer &>/dev/nul
-systemctl daemon-reload
-echo "Délai service réplication passé à monthly. Pour vérifier (attendre un peu...) : zgrep replication /var/log/syslog*"
-fi 
+#read -r -p "Noeud utilisé pour de la réplication ? <O/N> " prompt
+#if [[ $prompt == "N" || $prompt == "n" ]] ; then
+#echo -e "${tnorm}"
+#sed -i 's/OnCalendar=minutely/OnCalendar=monthly/g' /etc/systemd/system/timers.target.wants/pvesr.timer &>/dev/nul
+#sed -i 's/OnCalendar=minutely/OnCalendar=monthly/g' /usr/lib/systemd/system/pvesr.timer &>/dev/nul
+#systemctl daemon-reload
+#echo "Délai service réplication passé à monthly. Pour vérifier (attendre un peu...) : zgrep replication /var/log/syslog*"
+#fi 
 
 echo "Vos réponses :"
 echo "votre mail :" "$adminmail";

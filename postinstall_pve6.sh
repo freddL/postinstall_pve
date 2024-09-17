@@ -14,11 +14,11 @@ echo ""
 ####initialisation des variables
 
 # local
-export LANG="fr_FR.UTF-8"
+export LANG="en_us.utf-8"
 export LC_ALL="C"
 
 ##mail de l'admin
-echo "Votre Adresse mail :"
+echo "Your email:"
 read -r adminmail
 
 ##gestion du proxy local
@@ -30,29 +30,29 @@ read -r proxy
 echo "Port du proxy"
 read -r portproxy
 else
-echo "ok pas de serveur proxy"
+echo "ok no proxy server"
 noproxy=1
 fi
 
 ##serveur ntp
-echo "Votre serveur ntp :"
+echo "Your ntp server :"
 read -r ntp
 
 ##domaine smtp
-echo "Votre domaine d'émission smtp :"
+echo "Your server smtp :"
 read -r domainesmtp
 
 ##relay smtp
-echo "Votre relay smtp :"
+echo "Your relay smtp :"
 read -r relaysmtp
 
-read -r -p "Noeud utilisé pour de la réplication ? <O/N> " prompt
+read -r -p "Node used for replication? <Y / N> " prompt
 if [[ $prompt == "N" || $prompt == "n" ]] ; then
 echo -e "${tnorm}"
 sed -i 's/OnCalendar=minutely/OnCalendar=monthly/g' /etc/systemd/system/pvesr.timer &>/dev/nul
 sed -i 's/OnCalendar=minutely/OnCalendar=monthly/g' /lib/systemd/system/pvesr.timer &>/dev/nul
 systemctl daemon-reload
-echo "Délai service réplication passé à monthly. Pour vérifier (attendre un peu...) : zgrep replication /var/log/syslog*"
+echo "Replication service time passed to monthly. To check (wait a bit ...) : zgrep replication /var/log/syslog*"
 fi 
 
 echo "Vos réponses :"
@@ -75,19 +75,6 @@ sed -i 's/\#use\_proxy/use\_proxy/g' /etc/wgetrc
 
 echo 'Acquire::http::Proxy "http://'"$proxy"':'"$portproxy"'/";' > /etc/apt/apt.conf.d/76pveproxy
 fi
-
-##ajout du dépot pve-no-subscription et non-free
-echo -e '\033[1;33m Ajout du depot pve-no-subscription et non-free \033[0m'
-echo "deb http://download.proxmox.com/debian buster pve-no-subscription" > /etc/apt/sources.list.d/pve-enterprise.list
-
-grep 'non-free' /etc/apt/sources.list
-if [ $? = "1" ]
-then
-sed -i "s/main/main\\ non-free/g" /etc/apt/sources.list
-else
-echo "non-free existant"
-fi
-
 ##maj proxmox + install outils
 echo -e '\033[1;33m Mise a jour du serveur Proxmox \033[0m'
 apt update && apt -y full-upgrade && apt -y dist-upgrade

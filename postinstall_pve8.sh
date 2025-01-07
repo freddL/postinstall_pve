@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "########################################################################"
 echo " ## script post-installation pour Proxmox 7.x                        ###"
-echo " ### Date : 27/09/2023                                               ###"
+echo " ### Date : 07/01/2025                                               ###"
 echo " ### Modification :                                                  ###"
 echo " ### Auteur : fred                                                   ###"
 echo " ### web site : https://memo-linux.com                               ###"
@@ -77,9 +77,7 @@ echo 'Acquire::http::Proxy "http://'"$proxy"':'"$portproxy"'/";' > /etc/apt/apt.
 fi
 
 ##ajout du dépot pve-no-subscription et non-free
-echo -e '\033[1;33m Ajout du depot pve-no-subscription et non-free \033[0m'
-echo "deb http://download.proxmox.com/debian/pve bookworm pve-no-subscription" > /etc/apt/sources.list.d/pve-enterprise.list
-
+echo -e '\033[1;33m Ajout du depot non-free \033[0m'
 grep 'non-free' /etc/apt/sources.list
 if [ $? = "1" ]
 then
@@ -87,33 +85,40 @@ sed -i "s/main/main\\ non-free-firmware/g" /etc/apt/sources.list
 else
 echo "non-free existant"
 fi
+
+echo -e '\033[1;33m Ajout du depot pve-no-subscription \033[0m'
+echo "deb http://download.proxmox.com/debian/pve bookworm pve-no-subscription" >> /etc/apt/sources.list
+echo "deb http://download.proxmox.com/debian/ceph-reef bookworm no-subscription" > /etc/apt/sources.list.d/ceph.list
+rm /etc/apt/sources.list.d/pve-enterprise.list
+
 ##maj proxmox + install outils
 echo -e '\033[1;33m Mise a jour du serveur Proxmox \033[0m'
-apt update && apt -y full-upgrade && apt -y dist-upgrade
+apt update && apt full-upgrade -y
 echo -e '\033[1;33m Installation des outils \033[0m'
-apt install -y  dirmngr pigz htop iptraf iotop iftop snmpd ncdu ethtool snmp-mibs-downloader apticron net-tools dnsutils ifupdown2 mlocate screen ncdu ntfs-3g ipmitool --force-yes
+apt install dirmngr htop iptraf-ng iotop iftop snmpd ncdu ethtool apticron net-tools dnsutils ifupdown2 mlocate screen ncdu ntfs-3g ipmitool -y
 apt autoremove -y
 apt clean
 
 ##Configuration du serveur ntp
-echo "server $ntp iburst" > /etc/chrony/chrony.conf
-systemctl restart chronyd
+touch /etc/chrony/sources.d/local-ntp-server.sources
+echo "server $ntp iburst" > /etc/chrony/sources.d/local-ntp-server.sources
+chronyc reload soucres
 
 ##remplacement de gzip par pigz
 ##pour pigz, je lui attribu que le nombre de tread par cpu
-if [ ! -f "/bin/pigzwrapper" ];then
-echo -e '\033[1;33m Remplacement de Gzip par Pigz \033[0m'
-touch /bin/pigzwrapper
-echo '#!/bin/sh' > /bin/pigzwrapper
-echo "PATH=${GZIP_BINDIR-'/bin'}:$PATH" >> /bin/pigzwrapper
-echo 'GZIP="-1"' >> /bin/pigzwrapper
-cpu=$(echo "$(grep -c "processor" /proc/cpuinfo) / $(grep "physical id" /proc/cpuinfo |sort -u |wc -l)" | bc)
-echo 'exec /usr/bin/pigz -p cpu  "$@"'  >> /bin/pigzwrapper
-sed -i 's/cpu/'"$cpu"'/g' /bin/pigzwrapper
-chmod +x /bin/pigzwrapper
-mv /bin/gzip /bin/gzip.original
-cp /bin/pigzwrapper /bin/gzip
-fi
+#if [ ! -f "/bin/pigzwrapper" ];then
+#echo -e '\033[1;33m Remplacement de Gzip par Pigz \033[0m'
+#touch /bin/pigzwrapper
+#echo '#!/bin/sh' > /bin/pigzwrapper
+#echo "PATH=${GZIP_BINDIR-'/bin'}:$PATH" >> /bin/pigzwrapper
+#echo 'GZIP="-1"' >> /bin/pigzwrapper
+#cpu=$(echo "$(grep -c "processor" /proc/cpuinfo) / $(grep "physical id" /proc/cpuinfo |sort -u |wc -l)" | bc)
+#echo 'exec /usr/bin/pigz -p cpu  "$@"'  >> /bin/pigzwrapper
+#sed -i 's/cpu/'"$cpu"'/g' /bin/pigzwrapper
+#chmod +x /bin/pigzwrapper
+#mv /bin/gzip /bin/gzip.original
+#cp /bin/pigzwrapper /bin/gzip
+#fi
 
 ##paramétrage de postfix 
 ##pour éviter erreur : error: open database /etc/aliases.db: No such file or directory
@@ -139,7 +144,7 @@ hostname -i >> info.txt
 echo "Mettre en supervision ce nouveau serveur Proxmox :" | mail -s "Nouveau Serveur Proxmox" "$adminmail" < info.txt
 
 ##suppression baniere
-sed -Ezi.bak "s/(Ext.Msg.show\(\{\s+title: gettext\('No valid sub)/void\(\{ \/\/\1/g" /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
+#sed -Ezi.bak "s/(Ext.Msg.show\(\{\s+title: gettext\('No valid sub)/void\(\{ \/\/\1/g" /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
 
 # creation tache de verification de desactivation de la banniere
 #if [ ! -f "/etc/cron.daily/pve-nosub" ];then

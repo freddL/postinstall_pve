@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "########################################################################"
-echo " ## script post-installation pour Proxmox 7.x                        ###"
+echo " ## script post-installation pour Proxmox 8.x                        ###"
 echo " ### Date : 07/01/2025                                               ###"
 echo " ### Modification :                                                  ###"
 echo " ### Auteur : fred                                                   ###"
@@ -45,15 +45,6 @@ read -r domainesmtp
 ##relay smtp
 echo "Votre relay smtp :"
 read -r relaysmtp
-
-#read -r -p "Noeud utilisé pour de la réplication ? <O/N> " prompt
-#if [[ $prompt == "N" || $prompt == "n" ]] ; then
-#echo -e "${tnorm}"
-#sed -i 's/OnCalendar=minutely/OnCalendar=monthly/g' /etc/systemd/system/timers.target.wants/pvesr.timer &>/dev/nul
-#sed -i 's/OnCalendar=minutely/OnCalendar=monthly/g' /usr/lib/systemd/system/pvesr.timer &>/dev/nul
-#systemctl daemon-reload
-#echo "Délai service réplication passé à monthly. Pour vérifier (attendre un peu...) : zgrep replication /var/log/syslog*"
-#fi 
 
 echo "Vos réponses :"
 echo "votre mail :" "$adminmail";
@@ -104,22 +95,6 @@ touch /etc/chrony/sources.d/local-ntp-server.sources
 echo "server $ntp iburst" > /etc/chrony/sources.d/local-ntp-server.sources
 chronyc reload soucres
 
-##remplacement de gzip par pigz
-##pour pigz, je lui attribu que le nombre de tread par cpu
-#if [ ! -f "/bin/pigzwrapper" ];then
-#echo -e '\033[1;33m Remplacement de Gzip par Pigz \033[0m'
-#touch /bin/pigzwrapper
-#echo '#!/bin/sh' > /bin/pigzwrapper
-#echo "PATH=${GZIP_BINDIR-'/bin'}:$PATH" >> /bin/pigzwrapper
-#echo 'GZIP="-1"' >> /bin/pigzwrapper
-#cpu=$(echo "$(grep -c "processor" /proc/cpuinfo) / $(grep "physical id" /proc/cpuinfo |sort -u |wc -l)" | bc)
-#echo 'exec /usr/bin/pigz -p cpu  "$@"'  >> /bin/pigzwrapper
-#sed -i 's/cpu/'"$cpu"'/g' /bin/pigzwrapper
-#chmod +x /bin/pigzwrapper
-#mv /bin/gzip /bin/gzip.original
-#cp /bin/pigzwrapper /bin/gzip
-#fi
-
 ##paramétrage de postfix 
 ##pour éviter erreur : error: open database /etc/aliases.db: No such file or directory
 newaliases
@@ -144,16 +119,7 @@ hostname -i >> info.txt
 echo "Mettre en supervision ce nouveau serveur Proxmox :" | mail -s "Nouveau Serveur Proxmox" "$adminmail" < info.txt
 
 ##suppression baniere
-#sed -Ezi.bak "s/(Ext.Msg.show\(\{\s+title: gettext\('No valid sub)/void\(\{ \/\/\1/g" /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
 sed -Ezi.bak "s/(function\(orig_cmd\) \{)/\1\n\torig_cmd\(\);\n\treturn;/g" /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
-
-# creation tache de verification de desactivation de la banniere
-#if [ ! -f "/etc/cron.daily/pve-nosub" ];then
-#touch /etc/cron.daily/pve-nosub
-#echo '#!/bin/sh' > /etc/cron.daily/pve-nosub
-#echo "sed -i \"s/data.status.toLowerCase() !== 'active'/false/g\" /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js" >> /etc/cron.daily/pve-nosub
-#chmod a+x /etc/cron.daily/pve-nosub
-#fi
 
 read -r -p "Terminer, voulez-vous redémarrer le serveur maintenant ? <Y/n> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]

@@ -145,6 +145,7 @@ echo "Mettre en supervision ce nouveau serveur Proxmox :" | mail -s "Nouveau Ser
 
 ##suppression baniere
 #sed -Ezi.bak "s/(Ext.Msg.show\(\{\s+title: gettext\('No valid sub)/void\(\{ \/\/\1/g" /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
+sed -Ezi.bak "s/(function\(orig_cmd\) \{)/\1\n\torig_cmd\(\);\n\treturn;/g" /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
 
 # creation tache de verification de desactivation de la banniere
 #if [ ! -f "/etc/cron.daily/pve-nosub" ];then

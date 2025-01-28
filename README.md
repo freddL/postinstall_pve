@@ -11,7 +11,7 @@ cd postinstall_pve/
 
 <ul>
 
-<li>Téléchargement du script derrière un proxy le script :</li>
+<li>Téléchargement du script derrière un proxy :</li>
 https_proxy="http://IP_PROXY:PORT/" wget -c https://raw.githubusercontent.com/freddL/postinstall_pve/master/postinstall_pve8.sh -O postinstall.sh
       <li>Rendre le script exécutable :</li>
 chmod +x postinstall.sh

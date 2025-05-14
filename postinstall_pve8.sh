@@ -86,7 +86,7 @@ rm /etc/apt/sources.list.d/pve-enterprise.list
 echo -e '\033[1;33m Mise a jour du serveur Proxmox \033[0m'
 apt update && apt full-upgrade -y
 echo -e '\033[1;33m Installation des outils \033[0m'
-apt install dirmngr htop iptraf-ng iotop iftop snmpd ncdu ethtool apticron net-tools dnsutils ifupdown2 mlocate screen ncdu ntfs-3g ipmitool -y
+apt install dirmngr htop iptraf-ng iotop iftop snmpd ncdu ethtool apticron net-tools dnsutils ifupdown2 mlocate screen ntfs-3g ipmitool freeipmi-tools lm-sensors snmptrapd -y
 apt autoremove -y
 apt clean
 
